@@ -79,18 +79,18 @@ if [ -x /usr/bin/dircolors ]; then
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -145,19 +145,43 @@ export TODO="t"
 # Set this to false to turn off version control status checking within the prompt for all themes
 export SCM_CHECK=true
 
+alias  tmux = "tmux -2"
+
+# git 的 一些快捷
+alias git-log='git log --pretty=format:"%h - %an , modfy: %ar , commit: %cr , :%s" '
+
+
+
+
+#export PS1="\[\e[32;1m\][\u@\h \w\a]$>\[\e[0m\]"
+export PS1="\[\e[32;1m\][\u@\h \W\a]\\$>\[\e[0m\]"
+#source /home/godman/Downloads/tmuxinator/completion/tmuxinator.bash
+#export EDITOR='vim'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Path to the bash it configuration
+export BASH_IT="/home/godman/.bash_it"
+
+# Lock and Load a custom theme file.
+# Leave empty to disable theming.
+# location /.bash_it/themes/
+#export BASH_IT_THEME='bobby'
+export BASH_IT_THEME='iterate'
+
 # Set Xterm/screen/Tmux title with only a short hostname.
 # Uncomment this (or set SHORT_HOSTNAME to something else),
 # Will otherwise fall back on $HOSTNAME.
-#export SHORT_HOSTNAME=$(hostname -s)
+export SHORT_HOSTNAME=$(hostname -s)
 
 # Set Xterm/screen/Tmux title with only a short username.
 # Uncomment this (or set SHORT_USER to something else),
 # Will otherwise fall back on $USER.
-#export SHORT_USER=${USER:0:8}
+export SHORT_USER=${USER:0:8}
 
 # Set Xterm/screen/Tmux title with shortened command and directory.
 # Uncomment this to set.
-#export SHORT_TERM_LINE=true
+export SHORT_TERM_LINE=true
 
 # Set vcprompt executable path for scm advance info in prompt (demula theme)
 # https://github.com/djl/vcprompt
