@@ -1,32 +1,26 @@
-" Comment the following line if you don't want Vim and NeoVim to share the
-" same plugin download directory.
+" Let Vim and NeoVim shares the same plugin directory.
+" Comment it out if you don't like
 let g:spacevim_plug_home = '~/.vim/plugged'
 
-" Uncomment the following line to override the leader key. The default value is space key "<\Space>".
+" The default leader key is space key.
+" Uncomment the line below and modify "<\Space>" if you prefer another
 " let g:spacevim_leader = "<\Space>"
 
-" Uncomment the following line to override the local leader key. The default value is comma ','.
+" The default local leader key is comma.
+" Uncomment the line below and modify ',' if you prefer another
 " let g:spacevim_localleader = ','
 
-" Enable the existing layers in space-vim.
-" Refer to https://github.com/liuchengxu/space-vim/blob/master/layers/LAYERS.md for all available layers.
+" Enable the existing layers in space-vim
 let g:spacevim_layers = [
       \ 'fzf', 'better-defaults', 'which-key',
       \ ]
-
-" Uncomment the following line if your terminal(-emulator) supports true colors.
-" let g:spacevim_enable_true_color = 1
-
-" Uncomment the following if you have some nerd font installed.
- let g:spacevim_nerd_fonts = 1
 
 " If you want to have more control over the layer, try using Layer command.
 " if g:spacevim.gui
 "   Layer 'airline'
 " endif
 
-" Manage your own plugins.
-" Refer to https://github.com/junegunn/vim-plug for more detials.
+" Manage your own plugins, refer to vim-plug's instruction for more detials.
 function! UserInit()
 
   Layer 'fzf'
@@ -37,67 +31,80 @@ function! UserInit()
   Layer 'goyo'
 
   Layer 'html'
-  Layer 'python'
+  "Layer 'python'
   Layer 'markdown'
   Layer 'c-c++'
 
-  " Add your own plugin via Plug command.
+  " Add plugin via Plug command.
   Plug 'junegunn/seoul256.vim'
-  Plug 'liuchengxu/space-vim-theme'
-  Plug 'tpope/vim-fugitive'
-  Plug 'junegunn/vim-github-dashboard'
-  Plug 'arcticicestudio/nord-vim'
   Plug 'scrooloose/nerdtree'
-  Plug 'wakatime/vim-wakatime'
-  Plug 'vim-scripts/taglist.vim'
-  Plug 'universal-ctags/ctags'
+  Plug 'arcticicestudio/nord-vim'
+  Plug 'ryanoasis/vim-devicons'
   Plug 'scrooloose/nerdcommenter'
+  Plug 'majutsushi/tagbar'
   Plug 'mileszs/ack.vim'
   Plug 'dyng/ctrlsf.vim'
+  Plug 'easymotion/vim-easymotion'
+  Plug 'Shougo/vimproc.vim',{'do' : 'make'}
+  Plug 'benmills/vimux'
+  Plug 'uarun/vim-protobuf'
+  Plug 'tpope/vim-surround'
+  Plug 'luochen1990/rainbow'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'benmills/vimux'
+  Plug 'uarun/vim-protobuf'
+  Plug 'tpope/vim-surround'
+  Plug 'luochen1990/rainbow'
+  Plug 'Shougo/neocomplete.vim'
+  Plug 'Shougo/neosnippet.vim'
+  Plug 'Shougo/neosnippet-snippets'
+  Plug 'bkad/CamelCaseMotion'
+  Plug 'joshdick/onedark.vim'
+  Plug 'arcticicestudio/nord-vim'
+  Plug 'solarnz/thrift.vim'
+  Plug 'godlygeek/tabular'
+  Plug 'plasticboy/vim-markdown'  " markdown 语法高亮
+  Plug 'mileszs/ack.vim'
   Plug 'vim-scripts/TaskList.vim'
   Plug 'jiangmiao/auto-pairs'
   Plug 'Yggdroot/indentLine'    " 显示缩进对齐线
+  "Plug 'Shougo/denite.vim'
+  "Plug 'Shougo/vimproc'
   Plug 'Shougo/vimshell.vim'
   Plug 'mbbill/echofunc'
   Plug 'Shougo/unite.vim'       " 全局查找
   Plug 'Shougo/neomru.vim'
-  Plug 'Shougo/neoyank.vim'
-  Plug 'Shougo/unite-outline'
-  Plug 'Shougo/unite-help'
-  Plug 'uarun/vim-protobuf'
-  Plug 'tpope/vim-surround'
-  Plug 'luochen1990/rainbow'
-  Plug 'majutsushi/tagbar'
-  "Plug 'Valloric/YouCompleteMe'
-  Plug 'Shougo/neocomplete.vim'   " 和 YCM 一样的c/c++ 补全
-  Plug 'Shougo/neosnippet.vim'
-  Plug 'Shougo/neosnippet-snippets'
-
-
+  "Plug 'vim-scripts/YankRing.vim'
+  Plug 'wakatime/vim-wakatime'
 
 endfunction
 
-
-" Override the default settings from space-vim as well as adding extras
+" Override the default settings as well as adding extras
 function! UserConfig()
+  " If you have installed the powerline fonts and want to enable airline layer
+  " let g:airline_powerline_fonts=1
 
-  " Override the default settings.
-  " Uncomment the following line to disable relative number.
-  " set norelativenumber
+  " Use gui colors in terminal if available
+  function! s:enable_termgui()
+    if has('termguicolors')
+      set termguicolors
+      if g:spacevim.tmux
+        " If use vim inside tmux, see https://github.com/vim/vim/issues/993
+        " set Vim-specific sequences for RGB colors
+        let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+        let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+      endif
+    endif
+  endfunction
 
-  " Adding extras.
-  " Uncomment the following line If you have installed the powerline fonts.
-  " It is good for airline layer.
-  " let g:airline_powerline_fonts = 1
-  " color space-vim-dark
-  " colorscheme space_vim_theme
+  syntax on
+  "colorscheme onedark
   colorscheme nord
   let g:nord_italic = 1
   let g:nord_underline = 1
   let g:nord_italic_comments = 1
   let g:nord_uniform_status_lines = 1
   let g:nord_comment_brightness = 12
-
 "------------------------------------------------------------------------------
 "-----------------------------------   NERDTree  ------------------------------
 "------------------------------------------------------------------------------
@@ -266,4 +273,6 @@ fun! ShowFuncName()
 endfun
 map <F11> :call ShowFuncName() <CR>
 
+  " If your terminal(-emulator) supports true colors, uncomment the line below
+  " call s:enable_termgui()
 endfunction

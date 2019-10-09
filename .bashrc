@@ -1,3 +1,10 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -28,7 +35,7 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -85,12 +92,12 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # colored GCC warnings and errors
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -112,40 +119,34 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# If not running interactively, don't do anything
-case $- in
-  *i*) ;;
-    *) return;;
-esac
 
-# Path to the bash it configuration
-export BASH_IT="/home/godman/.bash_it"
+# User specific aliases and functions
+# bb 命令 与 a 命令
+test -s /home/godman/appsvr/bin/bladefunctions && . /home/godman/appsvr/bin/bladefunctions || true
+export LD_LIBRARY_PATH=/usr/local/lib
 
-# Lock and Load a custom theme file.
-# Leave empty to disable theming.
-# location /.bash_it/themes/
-export BASH_IT_THEME='bobby'
+# for gen_code.py
 
-# (Advanced): Change this to the name of your remote repo if you
-# cloned bash-it with a remote other than origin such as `bash-it`.
-# export BASH_IT_REMOTE='bash-it'
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias to-227="sshpass -f my_password ssh 192.168.9.227"
+alias to-228="sshpass -f my_password ssh 192.168.9.228"
+alias to-229="sshpass -f my_password ssh 192.168.9.229"
+alias to-230="sshpass -f my_password ssh 192.168.9.230"
+alias to-aliyun="sshpass -f aliyun_my_password ssh -p22 zhangyong@101.37.24.174"
+#alias to-jump='ssh zhangyong@106.75.9.85 -p56000'
+alias to-jump='/usr/bin/expect /home/godman/appsvr/zy_c/script/loginjump'
+alias autologin='/bin/bash /home/godman/appsvr/zy_c/script/autologin'
+alias tmux-up='/bin/bash /home/godman/appsvr/zy_c/script/development.sh'
+alias tmux-kill='/bin/bash /home/godman/appsvr/zy_c/script/kill-session.sh'
+alias tmux-attach='/bin/bash /home/godman/appsvr/zy_c/script/attach-session.sh'
+alias be-root='/usr/bin/expect  /home/godman/appsvr/zy_c/script/be_root'
 
-# Your place for hosting Git repos. I use this for private repos.
-export GIT_HOSTING='git@git.domain.com'
-
-# Don't check mail when opening terminal.
-unset MAILCHECK
-
-# Change this to your console based IRC client of choice.
-export IRC_CLIENT='irssi'
-
-# Set this to the command you use for todo.txt-cli
-export TODO="t"
-
-# Set this to false to turn off version control status checking within the prompt for all themes
-export SCM_CHECK=true
-
-alias  tmux = "tmux -2"
+# tmux 使用 -2 参数，Force tmux to assume the terminal supports 256 colours
+alias tmux="tmux -2"
+#[ -z "$TMUX" ] && export TERM=xterm-256color
 
 # git 的 一些快捷
 alias git-log='git log --pretty=format:"%h - %an , modfy: %ar , commit: %cr , :%s" '
@@ -168,6 +169,25 @@ export BASH_IT="/home/godman/.bash_it"
 # location /.bash_it/themes/
 #export BASH_IT_THEME='bobby'
 export BASH_IT_THEME='iterate'
+
+# (Advanced): Change this to the name of your remote repo if you
+# cloned bash-it with a remote other than origin such as `bash-it`.
+# export BASH_IT_REMOTE='bash-it'
+
+# Your place for hosting Git repos. I use this for private repos.
+export GIT_HOSTING='git@git.domain.com'
+
+# Don't check mail when opening terminal.
+unset MAILCHECK
+
+# Change this to your console based IRC client of choice.
+export IRC_CLIENT='irssi'
+
+# Set this to the command you use for todo.txt-cli
+export TODO="t"
+
+# Set this to false to turn off version control status checking within the prompt for all themes
+export SCM_CHECK=true
 
 # Set Xterm/screen/Tmux title with only a short hostname.
 # Uncomment this (or set SHORT_HOSTNAME to something else),
@@ -196,3 +216,18 @@ export SHORT_TERM_LINE=true
 
 # Load Bash It
 source "$BASH_IT"/bash_it.sh
+source ~/.git-completion.bash
+
+# v2en.co 网站查单词
+v2(){
+  declare q="$*"
+  curl --user-agent curl "https://v2en.co/${q// /%20}"
+}
+
+v2-sh(){
+  while echo -n "v2en> "
+    read -r input
+    [[ -n "$input" ]]
+  do v2 "$input"
+  done
+}
