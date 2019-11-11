@@ -145,8 +145,8 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    "\ 'default' : '',
+    "\ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
 
@@ -193,16 +193,16 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
+"if !exists('g:neocomplete#sources#omni#input_patterns')
+  "let g:neocomplete#sources#omni#input_patterns = {}
+"endif
 "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 "------------------------------------------------------------------------------
 "-----------------------------------   global setting  ------------------------
@@ -214,16 +214,16 @@ set sw=4
 autocmd BufNewFile *.[ch],*.hpp,*.cpp,*.cc exec ":call Addreadme()"
 function Addreadme()
     call setline(1,"/****************************************************************************")
-    call append(1," * Copyright(c) ".strftime("%Y").", all rights reserved" )
-    call append(2," *")
-    call append(3," * File:       \t".expand("%:t"))
-    call append(4," * Author:     \tT1035")
-    call append(5," * Revision:")
-    call append(6," * Description:")
-    call append(7," * Create:     \t".strftime("%Y-%m-%d %H:%M:%S"))
-    call append(8," * Modified:   \t".strftime("%Y-%m-%d %H:%M:%S"))
-    call append(9," *")
-    call append(10," **************************************************************************/")
+    "call append(1," * Copyright(c) ".strftime("%Y").", all rights reserved" )
+    call append(1," *")
+    call append(2," * File:       \t".expand("%:t"))
+    "call append(4," * Author:     \tT1035")
+    call append(3," * Revision:")
+    call append(4," * Description:")
+    call append(5," * Create:     \t".strftime("%Y-%m-%d %H:%M:%S"))
+    call append(6," * Modified:   \t".strftime("%Y-%m-%d %H:%M:%S"))
+    call append(7," *")
+    call append(8," **************************************************************************/")
 endf
 
 "autocmd FileWritePre,BufWritePre *.[ch],*.hpp,*.cpp,*.cc exec "call DataInsert()"
@@ -239,12 +239,13 @@ endf
 function HeaderPython()
   call setline(1,"#!/bin/python3")
   call append(1,"#-*- coding:utf-8 -*-")
-  call append(2,"# grbh0226@gmail.com".strftime('%Y-%m-%d %T',localtime()))
+  "call append(2,"# grbh0226@gmail.com".strftime('%Y-%m-%d %T',localtime()))
 endf
 
 function HeaderBash()
   call setline(1,"#!/bin/bash")
-  call append(1,"#T1035\t".strftime('%Y-%m-%d %T',localtime()))
+  "call append(1,"#T1035\t".strftime('%Y-%m-%d %T',localtime()))
+  call append(1,"create time: ".strftime('%Y-%m-%d %T',localtime()))
 endf
 
 autocmd BufNewFile *.py call HeaderPython()
@@ -271,6 +272,36 @@ nnoremap <silent><leader>ub :<C-u>Unite buffer<CR>
 nnoremap <silent><leader>uf :<C-u>Unite file buffer file_mru<CR>
 nnoremap <silent><leader>ur :<C-u>Unite  file_rec/async buffer file_mru<CR>
 nnoremap <silent><leader>ul :<C-u>Unite line<CR>
+
+"--------------------------------------------------------------------------------------------
+"----------------------------------- YouCompleteMe.vim   ------------------------
+"--------------------------------------------------------------------------------------------
+
+let g:ycm_add_preview_to_completeopt = 0
+"let g:ycm_show_diagnostics_ui = 0
+let g:ycm_server_log_level = 'info'
+let g:ycm_min_num_identifier_candidate_chars = 2
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_complete_in_strings=1
+let g:ycm_key_invoke_completion = '<c-z>'
+set completeopt=menu,menuone
+
+noremap <c-z> <NOP>
+
+let g:ycm_semantic_triggers =  {
+			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+			\ 'cs,lua,javascript': ['re!\w{2}'],
+			\ }
+
+let g:ycm_filetype_whitelist = { 
+			\ "c":1,
+			\ "cpp":1, 
+			\ "objc":1,
+			\ "sh":1,
+			\ "zsh":1,
+			\ "zimbu":1,
+      \ "go":1,
+			\ }
 
 "--------------------------------------------------------------------------------------------
 "----------------------------------- 按下 F1 显示 当前行所在的函数名  ------------------------
