@@ -68,6 +68,8 @@ function! UserInit()
   Plug 'ycm-core/YouCompleteMe'
   Plug 'dense-analysis/ale'
   Plug 'liuchengxu/vista.vim'
+  Plug 'justinmk/vim-dirvish'
+
   Plug 'chr4/nginx.vim'
   Plug 'fatih/vim-go'
 
